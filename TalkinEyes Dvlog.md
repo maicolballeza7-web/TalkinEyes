@@ -4,7 +4,7 @@
 
 Dispositivo de comunicación por parpadeos para personas con discapacidad motriz o de habla (como ELA). Usa visión computacional para detectar parpadeos intencionales y traducirlos en selecciones de un menú (comer, baño, dolor, etc.), que después se convierten en voz.
 
-La idea está inspirada en los sistemas de comunicación asistida tipo Stephen Hawking, pero simplificada: en vez de deletrear con código Morse, un parpadeo selecciona una opción de un menú de necesidades básicas.
+La idea está inspirada en los sistemas de comunicación asistida tipo Stephen Hawking, pero simplificada: selecciona una opción de un menú de necesidades básicas.
 
 27 agosto
 colocamos los puntos que son para los ojos  con eye left y una lista de valores de los landmarks 
@@ -24,11 +24,6 @@ ear cerrado == a casi siempre 0 . 05 o similares hasta llegara al 0 ademas que h
 
 Es un proyecto **100% software**, sin sensores externos 
 
----
-
-
-
----
 
 ## Con qué está hecho
 
