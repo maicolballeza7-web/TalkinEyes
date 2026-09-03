@@ -7,7 +7,7 @@ Dispositivo de comunicación por parpadeos para personas con discapacidad motriz
 La idea está inspirada en los sistemas de comunicación asistida tipo Stephen Hawking, pero simplificada: en vez de deletrear con código Morse, un parpadeo selecciona una opción de un menú de necesidades básicas.
 
 27 agosto
-colocamos los puntos que son para los ojos  con eye left y una losta de valores de los landmarks 
+colocamos los puntos que son para los ojos  con eye left y una lista de valores de los landmarks 
 luego haremos una funcion para detectar el EAR
 ---
 28 agosto
