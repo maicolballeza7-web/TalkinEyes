@@ -1,3 +1,4 @@
+#Esta es la plantilla con la que comenzo todo para la vision computacional
 import cv2
 
 cap = cv2.VideoCapture(0)
