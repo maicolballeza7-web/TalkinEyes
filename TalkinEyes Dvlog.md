@@ -19,23 +19,14 @@ ear cerrado == a casi siempre 0 . 05 o similares hasta llegara al 0 ademas que h
 
 - **Detección facial**:  detecta 468 puntos de la cara en tiempo real con la cámara.
 - **Detección de parpadeo**: se aíslan los puntos de los ojos y se calcula el **EAR** (qué tan abierto/cerrado está el ojo).
-- **Intencional vs. involuntario**: una pequeña red neuronal analiza cómo cambia el EAR en el tiempo, para distinguir un parpadeo a propósito de uno normal.
 - **Verificación de mirada**: si el usuario no está viendo a la cámara, se cancela la selección (para evitar errores).
 - **Menú → voz**: el parpadeo elige una opción del menú y esa opción se convierte en voz.
 
-Es un proyecto **100% software**, sin sensores externos — a propósito, para mantenerlo simple y que algún día se pueda ofrecer fácil en farmacias o centros de salud.
+Es un proyecto **100% software**, sin sensores externos 
 
 ---
 
 
-- [x] Face Mesh funcionando
-- [ ] Aislar landmarks de los ojos y calcular EAR
-- [ ] Tolerar rotación de cabeza (no solo de frente)
-- [ ] Entrenar la red neuronal chica para distinguir parpadeos
-- [ ] Sistema de menú por bloques
-- [ ] Texto a voz
-- [ ] Armar el setup de la demo (luz e iluminación controlada)
-- [ ] Probarlo con usuarios reales
 
 ---
 
@@ -44,8 +35,7 @@ Es un proyecto **100% software**, sin sensores externos — a propósito, para m
 - Python
 - MediaPipe (Face Mesh)
 - OpenCV
-- (Falta) red neuronal chica para clasificar parpadeos
-- (Falta) motor de texto a voz
+- motor de texto a voz
 
 ---
 
