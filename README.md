@@ -224,7 +224,19 @@ TalkinEyes can currently detect eye movements, identify intentional closures, na
 The project is being developed as a learning experience as well as an exploration of accessible human-computer interaction.
 
 ---
+## 👋 About the Project
 
+I’m a 17-year-old student from Mexico studying at BUAP (Benemérita Universidad Autónoma de Puebla).
+
+I started learning programming about three months ago, and TalkinEyes is one of the projects I have built while learning.
+
+I developed the project independently, learning many of the technologies along the way. I also used AI as a learning and development tool — to understand concepts, debug problems, explore ideas, and improve parts of the project.
+
+AI helped me move faster, but I still had to understand the code, test it, make decisions, and put the different pieces together into a working prototype.
+
+For me, TalkinEyes is not just a computer vision project. It represents what I have been able to learn and build in a relatively short time, with the goal of exploring a technology that could potentially help someone communicate.
+
+---
 ## ❤️ Final Note
 
 TalkinEyes started as a programming experiment.
