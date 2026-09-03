@@ -12,14 +12,6 @@ The project started with one question:
 
 ---
 
-## 🎥 Demo
-
-> **A short demonstration of TalkinEyes navigating the menu and selecting a phrase using an intentional blink.**
-
-*Demo coming soon / add GIF or video here.*
-
----
-
 ## 💡 The Problem
 
 For people with severe motor or speech limitations, communicating basic needs can become difficult when using a keyboard, mouse, or touchscreen is not practical.
