@@ -2,9 +2,9 @@
 
 > **Give a voice to those who can only blink.**
 
-TalkinEyes is an accessibility-focused communication prototype that uses **eye blinks as an input method**.
+TalkinEyes is an accessibility-focused communication prototype that uses **intentional eye blinks as an input method**.
 
-The idea is simple: a camera tracks the user's eyes, intentional blinks are detected, and the system uses them to navigate a visual menu and select phrases that can be spoken aloud using text-to-speech.
+A camera tracks the user's eyes, detects intentional closures, and uses them to navigate a visual menu. When an option is selected, the corresponding phrase can be spoken aloud using text-to-speech.
 
 The project started with one question:
 
@@ -12,13 +12,21 @@ The project started with one question:
 
 ---
 
+## 🎥 Demo
+
+> **A short demonstration of TalkinEyes navigating the menu and selecting a phrase using an intentional blink.**
+
+*Demo coming soon / add GIF or video here.*
+
+---
+
 ## 💡 The Problem
 
-For people with severe motor or speech limitations, communicating basic needs can be difficult when using a keyboard, mouse, or touchscreen is not possible or practical.
+For people with severe motor or speech limitations, communicating basic needs can become difficult when using a keyboard, mouse, or touchscreen is not practical.
 
 TalkinEyes explores whether **computer vision and intentional eye blinks** can provide another way to interact with a communication interface.
 
-It is not intended to replace professional assistive communication devices. It is a prototype exploring what could be possible.
+It is not intended to replace professional assistive communication devices. It is an experimental prototype exploring what could be possible.
 
 ---
 
@@ -26,27 +34,27 @@ It is not intended to replace professional assistive communication devices. It i
 
 ```text
 Camera
-  ↓
+   ↓
 MediaPipe Face Landmarks
-  ↓
+   ↓
 Eye landmarks
-  ↓
+   ↓
 EAR calculation
-  ↓
+   ↓
 Blink detection
-  ↓
-Menu navigation
-  ↓
+   ↓
+Menu scanning
+   ↓
 Phrase selection
-  ↓
+   ↓
 Text-to-Speech
 ```
 
 TalkinEyes uses the **Eye Aspect Ratio (EAR)** to estimate whether the eyes are open or closed.
 
-To avoid treating every natural blink as a selection, the system also considers the **duration of the eye closure**.
+Because a normal blink should not automatically select an option, the system also considers the **duration of the eye closure**.
 
-This allows the user to:
+The interaction is designed around a simple flow:
 
 **Look → Wait → Blink → Communicate**
 
@@ -64,7 +72,7 @@ This allows the user to:
 * 🎨 Simple, high-contrast interface
 * 📷 Real-time camera processing
 
-Current categories include:
+Current communication categories include:
 
 * 🍽️ Food
 * 🚿 Bathroom
@@ -78,11 +86,34 @@ Current categories include:
 
 * **Python**
 * **OpenCV** — camera and computer vision
-* **MediaPipe** — facial landmarks
+* **MediaPipe** — facial landmark detection
 * **NumPy** — numerical calculations
 * **Tkinter** — graphical interface
 * **pyttsx3** — text-to-speech
 * **Git & GitHub** — version control
+
+---
+
+## 📂 Project Structure
+
+```text
+TalkinEyes/
+│
+├── TalkinEyes.py
+│   └── Main application
+│
+├── TalkinEyesV0.py
+│   └── Earlier prototype
+│
+├── camra.py
+│   └── Camera and computer vision experiments
+│
+├── formulas.md
+│   └── EAR calculations and eye landmarks
+│
+└── TalkinEyes Dvlog.md
+    └── Development journey and experiments
+```
 
 ---
 
@@ -123,9 +154,9 @@ TalkinEyes was designed around a simple interaction model:
 
 > **Look → Wait → Blink → Communicate**
 
-The interface uses large options and automatic highlighting so that the user does not need to physically reach a keyboard or mouse during normal interaction.
+The interface uses large options and automatic highlighting so the user can make selections without physically reaching a keyboard or mouse during normal interaction.
 
-The goal is to make the interaction as simple as possible while keeping the system understandable.
+The goal is to keep the interaction simple, predictable, and easy to understand.
 
 ---
 
@@ -137,13 +168,13 @@ The camera is used for real-time facial landmark detection, and the current impl
 
 This project is **not a medical device** and has not been clinically validated.
 
-Before being considered for real-world assistive use, it would require much more testing, reliability validation, accessibility testing, and feedback from potential users and professionals.
+Real-world assistive use would require significantly more testing, reliability validation, accessibility testing, and feedback from potential users and professionals.
 
 ---
 
 ## ⚠️ Limitations
 
-This is still an experimental project.
+TalkinEyes is still an experimental prototype.
 
 Detection can be affected by:
 
@@ -151,15 +182,15 @@ Detection can be affected by:
 * Camera position
 * Individual blinking patterns
 * Facial landmark accuracy
-* Different eye shapes and movements
+* Different eye movements
 
-The current system also has a limited vocabulary and may require individual calibration to work reliably for different users.
+The current system also has a limited vocabulary and may require individual calibration for different users.
 
 ---
 
 ## 🌱 What's Next?
 
-Some improvements I would like to explore:
+Future improvements could include:
 
 * Individual eye calibration
 * More communication categories and phrases
@@ -171,25 +202,43 @@ Some improvements I would like to explore:
 
 ---
 
-## 🧑‍💻 Why I Built This
+## 📌 Project Status
 
-I started learning programming relatively recently, and TalkinEyes grew out of my curiosity about **Python and computer vision**.
+**Functional prototype — still under development.**
 
-While learning how facial landmarks and eye detection worked, I started wondering if something as simple as a blink could be used for something more meaningful.
+The current prototype can:
 
-So I decided to build it.
+* Detect facial and eye landmarks
+* Calculate EAR
+* Detect intentional eye closures
+* Automatically navigate communication menus
+* Select phrases using eye blinks
+* Navigate submenus
+* Convert selected phrases into speech
 
-I learned many of the technologies used here while developing the project — from calculating EAR and working with MediaPipe to building the interface, handling real-time camera input, and connecting everything with text-to-speech.
-
-It is not a perfect system, and I still have a lot to learn.
-
-But I wanted to use what I was learning to build something that could potentially **help someone communicate**.
+The project is currently focused on proving the interaction concept and improving reliability before considering more advanced features.
 
 ---
 
-## 📖 Development
+## 👋 About the Project
 
-TalkinEyes went through several stages:
+I’m a **17-year-old student from Mexico studying at BUAP**, and I started learning programming about three months ago.
+
+TalkinEyes began as a way to learn Python and computer vision. While experimenting with facial landmarks and eye detection, I started wondering if something as simple as a blink could be used for something more meaningful.
+
+I developed the project independently and learned many of the technologies while building it. I also used **AI as a learning and development tool** to understand concepts, debug problems, explore ideas, and move faster.
+
+AI was part of the process, but I still had to understand the code, test the system, make decisions, and connect the different pieces into a working prototype.
+
+For me, TalkinEyes represents more than what I have learned about programming. It is an attempt to use those new skills to explore a real human problem:
+
+**How could technology help someone communicate?**
+
+---
+
+## 📖 Development Journey
+
+TalkinEyes evolved through several stages:
 
 ```text
 Camera experiment
@@ -215,28 +264,6 @@ The development process, experiments, and progress are documented in the project
 
 ---
 
-## 📌 Project Status
-
-**Functional prototype — still under development.**
-
-TalkinEyes can currently detect eye movements, identify intentional closures, navigate menus, select phrases, and convert those selections into speech.
-
-The project is being developed as a learning experience as well as an exploration of accessible human-computer interaction.
-
----
-## 👋 About the Project
-
-I’m a 17-year-old student from Mexico studying at BUAP (Benemérita Universidad Autónoma de Puebla).
-
-I started learning programming about three months ago, and TalkinEyes is one of the projects I have built while learning.
-
-I developed the project independently, learning many of the technologies along the way. I also used AI as a learning and development tool — to understand concepts, debug problems, explore ideas, and improve parts of the project.
-
-AI helped me move faster, but I still had to understand the code, test it, make decisions, and put the different pieces together into a working prototype.
-
-For me, TalkinEyes is not just a computer vision project. It represents what I have been able to learn and build in a relatively short time, with the goal of exploring a technology that could potentially help someone communicate.
-
----
 ## ❤️ Final Note
 
 TalkinEyes started as a programming experiment.
