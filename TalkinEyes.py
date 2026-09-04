@@ -1,8 +1,10 @@
 
+
 import cv2
 import mediapipe as mp
 import numpy as np
 import tkinter as tk
+from PIL import Image, ImageTk
 # pip install pyttsx3
 import threading
 import queue
@@ -255,7 +257,7 @@ for i, (texto, color) in enumerate(bloques_info):
 
     rectangulos.append(rect)
 
-canvas.create_text(400, 550, text="Selecciona con la mirada", fill="#64748B", font=("Segoe UI", 13, "bold"))
+canvas.create_text(400, 550, text="Selecciona con un parpadeo", fill="#64748B", font=("Segoe UI", 13, "bold"))
 
 
 def cancelar_timer():
@@ -377,7 +379,7 @@ def color_mas_intenso(color):
 glow_ids = {}  # guarda el id del glow por canvas, para poder borrarlo despues
 
 def aplicar_resaltado(canvas_obj, rectangulos_obj, colores, indice):
-    """Restablece las tarjetas y destaca la actual con color, borde reforzado y glow."""
+
     for rect, color in zip(rectangulos_obj, colores):
         canvas_obj.itemconfig(rect, fill=color, outline="", width=1)
 
@@ -399,7 +401,7 @@ def aplicar_resaltado(canvas_obj, rectangulos_obj, colores, indice):
     margen = 12
     nuevo_glow = canvas_obj.create_rectangle(
         x1 - margen, y1 - margen, x2 + margen, y2 + margen,
-        outline="#FFD700", width=4
+        outline="#6AA1A3", width=4
     )
     canvas_obj.tag_lower(nuevo_glow, rect_actual)
     glow_ids[canvas_obj] = nuevo_glow
@@ -538,6 +540,11 @@ mp_face_mesh = mp.solutions.face_mesh
 # LANDMARKS de los ojos
 LEFT_EYE = [362, 385, 387, 263, 373, 380]
 RIGHT_EYE = [33, 160, 158, 133, 153, 144]
+CONTORNOS_OJOS = [
+    (mp_face_mesh.FACEMESH_LEFT_EYE, (255, 220, 130)),
+    (mp_face_mesh.FACEMESH_RIGHT_EYE, (255, 220, 130)),
+]
+INDICES_ESQUINAS_OJOS = [33, 133, 362, 263]
 
 # Umbral para determinar el estado del ojo
 UMBRAL_CIERRE = 0.16       # por debajo de esto, se considera que el ojo se cerró
@@ -545,6 +552,13 @@ UMBRAL_REAPERTURA = 0.28   # por encima de esto, se considera que el ojo se abri
 
 # apertura de la camara
 cap = cv2.VideoCapture(0)
+camara_label = tk.Label(
+    ventana,
+    bg="#1E293B",
+    bd=2,
+    relief="solid",
+)
+camara_label.place(x=10, y=10, width=240, height=180)
 estado_anterior = "abierto"
 
 # funcion calcular EAR
@@ -580,6 +594,8 @@ def procesar_camara():
     if not success:
         return
 
+    image = cv2.flip(image, 1)
+
     # Convertir la imagen de BGR a RGB
     image = cv2.cvtColor(image, cv2.COLOR_BGR2RGB)
     image.flags.writeable = False
@@ -602,27 +618,40 @@ def procesar_camara():
                     color=(255, 255, 255),
                     thickness=1,
                     circle_radius=1
-                ),
-                connection_drawing_spec=mp_drawing.DrawingSpec(
-                    color=(0, 0, 100),
+                    ),
+                
+                    connection_drawing_spec=mp_drawing.DrawingSpec(
+                    color=(200, 255, 100),
                     thickness=1,
                     circle_radius=1
-                ),
+                    ),
             )
+
+            # Contornos limpios de ambos ojos.
+            h, w, _ = image.shape
+            for conexiones, color in CONTORNOS_OJOS:
+                for pt1_idx, pt2_idx in conexiones:
+                    lm1 = face_landmarks.landmark[pt1_idx]
+                    lm2 = face_landmarks.landmark[pt2_idx]
+                    x1, y1 = int(lm1.x * w), int(lm1.y * h)
+                    x2, y2 = int(lm2.x * w), int(lm2.y * h)
+                    cv2.line(image, (x1, y1), (x2, y2), color, 1, cv2.LINE_AA)
 
             # calculamos los landmarks de los ojos
             left_eye_points = [face_landmarks.landmark[i] for i in LEFT_EYE]
             right_eye_points = [face_landmarks.landmark[i] for i in RIGHT_EYE]
 
             # obtenemos los EAR
-            h, w, _ = image.shape
-
             left_ear = calcular_ear(left_eye_points, w, h)
             right_ear = calcular_ear(right_eye_points, w, h)
 
             if left_ear is None or right_ear is None:
-                cv2.imshow("MediaPipe Face Mesh", image)
-                cv2.waitKey(1)
+                imagen_rgb = cv2.cvtColor(image, cv2.COLOR_BGR2RGB)
+                imagen_tk = ImageTk.PhotoImage(
+                    Image.fromarray(imagen_rgb).resize((240, 180))
+                )
+                camara_label.imgtk = imagen_tk
+                camara_label.configure(image=imagen_tk)
                 ventana.after(10, procesar_camara)
                 return
 
@@ -652,6 +681,13 @@ def procesar_camara():
              else:
                 print("parpadeo natural (ignorado)")
 
+            color_estado = (0, 255, 100) if parpadeo else (255, 250, 130)
+            for idx in INDICES_ESQUINAS_OJOS:
+               lm = face_landmarks.landmark[idx]
+               x, y = int(lm.x * w), int(lm.y * h)
+               cv2.circle(image, (x, y), 4, color_estado, -1, cv2.LINE_AA)
+               cv2.circle(image, (x, y), 7, color_estado, 1, cv2.LINE_AA)
+
             # seleccionamos el bloque cuando hay parpadeo
             if parpadeo:
                 if pantalla_actual == "principal":
@@ -670,14 +706,17 @@ def procesar_camara():
                     seleccionar_dormir()
               # actualizamos el estado para el siguiente frame
             estado_anterior = estado_actual
-    cv2.imshow("MediaPipe Face Mesh", image)
-    cv2.waitKey(1)
+    imagen_rgb = cv2.cvtColor(image, cv2.COLOR_BGR2RGB)
+    imagen_tk = ImageTk.PhotoImage(
+        Image.fromarray(imagen_rgb).resize((240, 180))
+    )
+    camara_label.imgtk = imagen_tk
+    camara_label.configure(image=imagen_tk)
 
     ventana.after(10, procesar_camara)
 
 def cerrar_app():
     cap.release()
-    cv2.destroyAllWindows()
     ventana.destroy()
 
 
